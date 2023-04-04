@@ -21,6 +21,14 @@ string verificarTipoTriangulo(float lado1, float lado2, float lado3)
     }
 }
 
+void exibeTriangulo(float x1, float y1, float x2, float y2, float x3, float y3) {
+
+    glBegin(GL_TRIANGLES);
+    glVertex2f(x1, y1);
+    glVertex2f(x2, y2);
+    glVertex2f(x3, y3);
+    glEnd();
+}
 
 int main()
 {
@@ -45,7 +53,7 @@ int main()
         //float x1, y1, x2, y2, x3, y3;
         float x1 = -0.5, y1 = -0.5, x2 = 0, y2 = 0.5, x3 = 0.5, y3 = -0.5;
         //float x1 = -0.5, y1 = -0.25, x2 = 0.5, y2 = 1, x3 = 1, y3 = -0.25;
-        cout << "Digite os pontos do triangulo (x1, y1), (x2, y2) e (x3, y3): ";
+        //cout << "Digite os pontos do triangulo (x1, y1), (x2, y2) e (x3, y3): ";
         //cin >> x1 >> y1 >> x2 >> y2 >> x3 >> y3;
 
         // Verifica se os pontos formam um triângulo
@@ -67,30 +75,27 @@ int main()
             cout << "\n5. Encerrar";
             cout << "\nOpcao: ";
             cin >> opcao;
-            
-            if (opcao == 1) {
+
+            switch (opcao) {
+
+            case 1:
                 if (lado1 < lado2 + lado3 && lado2 < lado1 + lado3 && lado3 < lado1 + lado2)
                 {
-                    // Exibe o triângulo
-                    glBegin(GL_TRIANGLES);
-                    glVertex2f(x1, y1);
-                    glVertex2f(x2, y2);
-                    glVertex2f(x3, y3);
-                    glEnd();
+                    exibeTriangulo(x1, y1, x2, y2, x3, y3);
 
-                    // Verifica o tipo de triângulo
-                    string tipo = verificarTipoTriangulo(lado1, lado2, lado3);
-                    cout << "Tipo de triangulo: " << tipo << endl;
+                    cout << "Tipo de triangulo: " << verificarTipoTriangulo(lado1, lado2, lado3) << endl;
                     glfwSwapBuffers(window);
                 }
                 else
                 {
                     cout << "Pontos nao formam um triangulo" << endl;
                 }
-            }
-            else if (opcao == 2) {
+                break;
+
+            case 2:
                 cout << "Digite por quantas vezes deseja escalonar o triangulo: ";
                 cin >> escalonacao;
+
                 x1 = x1 * escalonacao;
                 x2 = x2 * escalonacao;
                 x3 = x3 * escalonacao;
@@ -98,42 +103,20 @@ int main()
                 y2 = y2 * escalonacao;
                 y3 = y3 * escalonacao;
 
-                lado1 = sqrt(pow(x2 - x1, 2) + pow(y2 - y1, 2));
-                lado2 = sqrt(pow(x3 - x2, 2) + pow(y3 - y2, 2));
-                lado3 = sqrt(pow(x3 - x1, 2) + pow(y3 - y1, 2));
+                exibeTriangulo(x1, y1, x2, y2, x3, y3);
 
-                if (lado1 < lado2 + lado3 && lado2 < lado1 + lado3 && lado3 < lado1 + lado2)
-                {
-                    // Exibe o triângulo
-                    glBegin(GL_TRIANGLES);
-                    glVertex2f(x1, y1);
-                    glVertex2f(x2, y2);
-                    glVertex2f(x3, y3);
-                    glEnd();
+                cout << "Tipo de triangulo: " << verificarTipoTriangulo(lado1, lado2, lado3) << endl;
+                glfwSwapBuffers(window);
+                break;
 
-                    // Verifica o tipo de triângulo
-                    string tipo = verificarTipoTriangulo(lado1, lado2, lado3);
-                    cout << "Tipo de triangulo: " << tipo << endl;
-                    glfwSwapBuffers(window);
-                }
-                else
-                {
-                    cout << "Pontos nao formam um triangulo" << endl;
-                }
-            }
-            else if (opcao == 3) {
-                
+            case 3:
                 float XTemp;
                 float YTemp;
-                cout << "Digite quanto deseja somar ao X: ";
-                cin >> XTemp;
-                cout << "Digite quanto deseja somar ao Y: ";
-                cin >> YTemp;
 
-                cout << "=== Antes ===";
-                cout << "\n X1: " << x1 << " Y1: " << y1;
-                cout << "\n X2: " << x2 << " Y2: " << y2;
-                cout << "\n X3: " << x3 << " Y3: " << y3;
+                cout << "Digite nova posicao em X: ";
+                cin >> XTemp;
+                cout << "Digite nova posicao em Y: ";
+                cin >> YTemp;
 
                 x1 = x1 + XTemp;
                 y1 = y1 + YTemp;
@@ -142,79 +125,92 @@ int main()
                 x3 = x3 + XTemp;
                 y3 = y3 + YTemp;
 
-                cout << "=== Depois ===";
+
+                glClear(GL_COLOR_BUFFER_BIT);
+
+                exibeTriangulo(x1, y1, x2, y2, x3, y3);
+
+                cout << "Tipo de triangulo: " << verificarTipoTriangulo(lado1, lado2, lado3) << endl;
+                glfwSwapBuffers(window);
+                break;
+
+            case 4:
+                int graus;
+
+                cout << "Digite quantos graus quer rotacionar: ";
+                cin >> graus;
+
+                float valX1;
+                float valY1;
+
+                valX1 = x1;
+                valY1 = y1;
+
+                cout << "\n\n=== Antes ===";
                 cout << "\n X1: " << x1 << " Y1: " << y1;
                 cout << "\n X2: " << x2 << " Y2: " << y2;
                 cout << "\n X3: " << x3 << " Y3: " << y3;
 
-                if (lado1 < lado2 + lado3 && lado2 < lado1 + lado3 && lado3 < lado1 + lado2)
-                {
-                    glClear(GL_COLOR_BUFFER_BIT);
 
-                    // Exibe o triângulo
-                    glBegin(GL_TRIANGLES);
-                    glVertex2f(x1, y1);
-                    glVertex2f(x2, y2);
-                    glVertex2f(x3, y3);
-                    glEnd();
+                //Translação do primeiro vértice para a coordenada (0,0) e arrastando todos os outros lados de acordo
+                x1 -= valX1;
+                y1 -= valY1;
+                x2 -= valX1;
+                y2 -= valY1;
+                x3 -= valX1;
+                y3 -= valY1;
 
-                    // Verifica o tipo de triângulo
-                    string tipo = verificarTipoTriangulo(lado1, lado2, lado3);
-                    cout << "Tipo de triangulo: " << tipo << endl;
-                    glfwSwapBuffers(window);
-                }
-                else
-                {
-                    cout << "Pontos nao formam um triangulo" << endl;
-                }
-
-                
-            }
-            else if (opcao == 4) {
-                int graus = 0;
-                
-                cout << "Digite quantos graus quer rotacionar: ";
-                cin >> graus;
-                
-                    cout << "=== Antes ===";
-                    cout << "\n X1: " << x1 << " Y1: " << y1;
-                    cout << "\n X2: " << x2 << " Y2: " << y2;
-                    cout << "\n X3: " << x3 << " Y3: " << y3;
-
-                    x1 = cos(graus) * x1 - sin(graus) * x1;
-                    y1 = sin(graus) * y1 + cos(graus) * y1;
-
-                    x2 = cos(graus) * x2 - sin(graus) * x2;
-                    y2 = sin(graus) * y2 + cos(graus) * y2;
-
-                    x3 = cos(graus) * x3 - sin(graus) * x3;
-                    y3 = sin(graus) * y3 + cos(graus) * y3;
-
-                    glClear(GL_COLOR_BUFFER_BIT);
-
-                    glBegin(GL_TRIANGLES);
-                    glVertex2f(x1, y1);
-                    glVertex2f(x2, y2);
-                    glVertex2f(x3, y3);
-                    glEnd();
+                cout << "\n\n=== Transalacao para o ponto (0,0) ===";
+                cout << "\n X1: " << x1 << " Y1: " << y1;
+                cout << "\n X2: " << x2 << " Y2: " << y2;
+                cout << "\n X3: " << x3 << " Y3: " << y3;
 
 
+                x1 = cos(graus) * x1 - sin(graus) * y1;
+                y1 = sin(graus) * x1 + cos(graus) * y1;
 
-                    // Verifica o tipo de triângulo
-                    string tipo = verificarTipoTriangulo(lado1, lado2, lado3);
-                    cout << "Tipo de triangulo: " << tipo << endl;
-                    glfwSwapBuffers(window);
+                x2 = cos(graus) * x2 - sin(graus) * y2;
+                y2 = sin(graus) * x2 + cos(graus) * y2;
 
-                    cout << "=== Depois ===";
-                    cout << " \nX1: " << x1 << " Y1: " << y1;
-                    cout << " \nX2: " << x2 << " Y2: " << y2;
-                    cout << " \nX3: " << x3 << " Y3: " << y3;
+                x3 = cos(graus) * x3 - sin(graus) * y3;
+                y3 = sin(graus) * x3 + cos(graus) * y3;
 
-            }
-            else if (opcao == 5) {
+                cout << "\n\n=== ROTACAO ===";
+                cout << "\n X1: " << x1 << " Y1: " << y1;
+                cout << "\n X2: " << x2 << " Y2: " << y2;
+                cout << "\n X3: " << x3 << " Y3: " << y3;
+
+                x1 += valX1;
+                y1 += valY1;
+                x2 += valX1;
+                y2 += valY1;
+                x3 += valX1;
+                y3 += valY1;
+
+                cout << "\n\n=== Retornado ao ponto inicial ===";
+                cout << "\n X1: " << x1 << " Y1: " << y1;
+                cout << "\n X2: " << x2 << " Y2: " << y2;
+                cout << "\n X3: " << x3 << " Y3: " << y3;
+
+                glClear(GL_COLOR_BUFFER_BIT);
+
+                exibeTriangulo(x1, y1, x2, y2, x3, y3);
+
+                cout << "Tipo de triangulo: " << verificarTipoTriangulo(lado1, lado2, lado3) << endl;
+                glfwSwapBuffers(window);
+
+                cout << "\n\n=== Depois ===";
+                cout << " \nX1: " << x1 << " Y1: " << y1;
+                cout << " \nX2: " << x2 << " Y2: " << y2;
+                cout << " \nX3: " << x3 << " Y3: " << y3;
+
+                break;
+
+            case 5:
                 return 0;
+                break;
             }
-            
+
         }
 
         // Atualiza a janela
