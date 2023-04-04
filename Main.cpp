@@ -22,7 +22,6 @@ string verificarTipoTriangulo(float lado1, float lado2, float lado3)
 }
 
 
-
 int main()
 {
     // Inicializa o GLFW
@@ -45,6 +44,7 @@ int main()
         // Lê os pontos
         //float x1, y1, x2, y2, x3, y3;
         float x1 = -0.5, y1 = -0.5, x2 = 0, y2 = 0.5, x3 = 0.5, y3 = -0.5;
+        //float x1 = -0.5, y1 = -0.25, x2 = 0.5, y2 = 1, x3 = 1, y3 = -0.25;
         cout << "Digite os pontos do triangulo (x1, y1), (x2, y2) e (x3, y3): ";
         //cin >> x1 >> y1 >> x2 >> y2 >> x3 >> y3;
 
@@ -58,12 +58,13 @@ int main()
 
         glfwSwapBuffers(window);
 
-        while (opcao != 4) {
+        while (opcao != 5) {
             cout << "\n=== Menu ===";
             cout << "\n1. Imprimir triangulo.";
             cout << "\n2. Escalonar triangulo";
             cout << "\n3. Transalacao do triangulo";
-            cout << "\n4. Encerrar";
+            cout << "\n4. Rotacao do triangulo";
+            cout << "\n5. Encerrar";
             cout << "\nOpcao: ";
             cin >> opcao;
             
@@ -120,7 +121,72 @@ int main()
                     cout << "Pontos nao formam um triangulo" << endl;
                 }
             }
+            else if (opcao == 3) {
+                cout << "Digite os pontos do triangulo (x1, y1), (x2, y2) e (x3, y3): ";
+                cin >> x1 >> y1 >> x2 >> y2 >> x3 >> y3;
+                if (lado1 < lado2 + lado3 && lado2 < lado1 + lado3 && lado3 < lado1 + lado2)
+                {
+                    // Exibe o triângulo
+                    glBegin(GL_TRIANGLES);
+                    glVertex2f(x1, y1);
+                    glVertex2f(x2, y2);
+                    glVertex2f(x3, y3);
+                    glEnd();
+
+                    // Verifica o tipo de triângulo
+                    string tipo = verificarTipoTriangulo(lado1, lado2, lado3);
+                    cout << "Tipo de triangulo: " << tipo << endl;
+                    glfwSwapBuffers(window);
+                }
+                else
+                {
+                    cout << "Pontos nao formam um triangulo" << endl;
+                }
+
+                
+            }
             else if (opcao == 4) {
+                int graus = 0;
+                
+                cout << "Digite quantos graus quer rotacionar: ";
+                cin >> graus;
+                
+                    cout << "=== Antes ===";
+                    cout << "\n X1: " << x1 << " Y1: " << y1;
+                    cout << "\n X2: " << x2 << " Y2: " << y2;
+                    cout << "\n X3: " << x3 << " Y3: " << y3;
+
+                    x1 = cos(graus) * x1 - sin(graus) * x1;
+                    y1 = sin(graus) * y1 + cos(graus) * y1;
+
+                    x2 = cos(graus) * x2 - sin(graus) * x2;
+                    y2 = sin(graus) * y2 + cos(graus) * y2;
+
+                    x3 = cos(graus) * x3 - sin(graus) * x3;
+                    y3 = sin(graus) * y3 + cos(graus) * y3;
+
+                    glClear(GL_COLOR_BUFFER_BIT);
+
+                    glBegin(GL_TRIANGLES);
+                    glVertex2f(x1, y1);
+                    glVertex2f(x2, y2);
+                    glVertex2f(x3, y3);
+                    glEnd();
+
+
+
+                    // Verifica o tipo de triângulo
+                    string tipo = verificarTipoTriangulo(lado1, lado2, lado3);
+                    cout << "Tipo de triangulo: " << tipo << endl;
+                    glfwSwapBuffers(window);
+
+                    cout << "=== Depois ===";
+                    cout << " \nX1: " << x1 << " Y1: " << y1;
+                    cout << " \nX2: " << x2 << " Y2: " << y2;
+                    cout << " \nX3: " << x3 << " Y3: " << y3;
+
+            }
+            else if (opcao == 5) {
                 return 0;
             }
             
