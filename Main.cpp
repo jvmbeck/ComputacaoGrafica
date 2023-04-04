@@ -122,10 +122,35 @@ int main()
                 }
             }
             else if (opcao == 3) {
-                cout << "Digite os pontos do triangulo (x1, y1), (x2, y2) e (x3, y3): ";
-                cin >> x1 >> y1 >> x2 >> y2 >> x3 >> y3;
+                
+                float XTemp;
+                float YTemp;
+                cout << "Digite quanto deseja somar ao X: ";
+                cin >> XTemp;
+                cout << "Digite quanto deseja somar ao Y: ";
+                cin >> YTemp;
+
+                cout << "=== Antes ===";
+                cout << "\n X1: " << x1 << " Y1: " << y1;
+                cout << "\n X2: " << x2 << " Y2: " << y2;
+                cout << "\n X3: " << x3 << " Y3: " << y3;
+
+                x1 = x1 + XTemp;
+                y1 = y1 + YTemp;
+                x2 = x2 + XTemp;
+                y2 = y2 + YTemp;
+                x3 = x3 + XTemp;
+                y3 = y3 + YTemp;
+
+                cout << "=== Depois ===";
+                cout << "\n X1: " << x1 << " Y1: " << y1;
+                cout << "\n X2: " << x2 << " Y2: " << y2;
+                cout << "\n X3: " << x3 << " Y3: " << y3;
+
                 if (lado1 < lado2 + lado3 && lado2 < lado1 + lado3 && lado3 < lado1 + lado2)
                 {
+                    glClear(GL_COLOR_BUFFER_BIT);
+
                     // Exibe o triângulo
                     glBegin(GL_TRIANGLES);
                     glVertex2f(x1, y1);
