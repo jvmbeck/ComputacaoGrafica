@@ -1,6 +1,7 @@
 #include <iostream>
 #include <GLFW/glfw3.h>
 #include <math.h>
+#include <cmath>
 
 using namespace std;
 
@@ -28,6 +29,19 @@ void exibeTriangulo(float x1, float y1, float x2, float y2, float x3, float y3) 
     glVertex2f(x2, y2);
     glVertex2f(x3, y3);
     glEnd();
+}
+
+int AcharPonto(float x1, float y1, float x2, float y2, float x3, float y3) {
+
+    int ponto = 0;
+    if (x1 < x2 && x1 < x3) {
+        ponto = 1;
+    }
+    else {
+        ponto = 0;
+    };
+    return ponto;
+    
 }
 
 int main()
@@ -66,6 +80,21 @@ int main()
 
         glfwSwapBuffers(window);
 
+        if (AcharPonto(x1, y1, x2, y2, x3, y3) == 1) {
+            cout << "Ponto verificado";
+            cout << "\nTrabalhando com Ponto Esquerdo";
+        }
+        else {
+            cout << "Erro na localização do ponto!!!";
+        };
+
+        float VetorDistancia[4];
+        VetorDistancia[0] = x2 - x1;
+        VetorDistancia[1] = x3 - x1;
+        VetorDistancia[2] = y2 - y1;
+        VetorDistancia[3] = y3 - y1;
+
+
         while (opcao != 5) {
             cout << "\n=== Menu ===";
             cout << "\n1. Imprimir triangulo.";
@@ -77,7 +106,6 @@ int main()
             cin >> opcao;
 
             switch (opcao) {
-
             case 1:
                 if (lado1 < lado2 + lado3 && lado2 < lado1 + lado3 && lado3 < lado1 + lado2)
                 {
@@ -153,44 +181,88 @@ int main()
 
 
                 //Translação do primeiro vértice para a coordenada (0,0) e arrastando todos os outros lados de acordo
+                /*
                 x1 -= valX1;
                 y1 -= valY1;
                 x2 -= valX1;
                 y2 -= valY1;
                 x3 -= valX1;
                 y3 -= valY1;
+                */
 
                 cout << "\n\n=== Transalacao para o ponto (0,0) ===";
                 cout << "\n X1: " << x1 << " Y1: " << y1;
                 cout << "\n X2: " << x2 << " Y2: " << y2;
                 cout << "\n X3: " << x3 << " Y3: " << y3;
+                float Xauxiliar;
+                float Yauxiliar;
 
+                float rad;
+                rad = graus * 3.14 / 180.0;
 
-                x1 = cos(graus) * x1 - sin(graus) * y1;
-                y1 = sin(graus) * x1 + cos(graus) * y1;
+                x1 = x1 - valX1;
+                y1 = y1 - valY1;
 
-                x2 = cos(graus) * x2 - sin(graus) * y2;
-                y2 = sin(graus) * x2 + cos(graus) * y2;
-
-                x3 = cos(graus) * x3 - sin(graus) * y3;
-                y3 = sin(graus) * x3 + cos(graus) * y3;
-
-                cout << "\n\n=== ROTACAO ===";
+                cout << "\n\n=== Transalacao para o ponto (0,0) ===";
                 cout << "\n X1: " << x1 << " Y1: " << y1;
+
+                Xauxiliar = cos(rad) * x1 - sin(rad) * y1;
+                Yauxiliar = sin(rad) * x1 + cos(rad) * y1;
+
+                cout << "\n\n=== Rotacao ===";
+                cout << "\n XAuxiliar: " << Xauxiliar << " YAuxiliar: " << Yauxiliar;
+
+                x1 = Xauxiliar + valX1;
+                y1 = Yauxiliar + valY1;
+
+                cout << "\n\n=== Transalacao volta ponto original ===";
+                cout << "\n X1: " << x1 << " Y1: " << y1;
+
+                x2 = x2 - valX1;
+                y2 = y2 - valY1;
+
+                cout << "\n\n=== Transalacao para o ponto (0,0) ===";
                 cout << "\n X2: " << x2 << " Y2: " << y2;
+
+                Xauxiliar = cos(rad) * x2 - sin(rad) * y2;
+                Yauxiliar = sin(rad) * x2 + cos(rad) * y2;
+
+
+                cout << "\n\n=== Rotacao ===";
+                cout << "\n XAuxiliar: " << Xauxiliar << " YAuxiliar: " << Yauxiliar;
+
+                x2 = Xauxiliar + valX1;
+                y2 = Yauxiliar + valY1;
+
+                cout << "\n\n=== Transalacao volta ponto original ===";
+                cout << "\n X2: " << x2 << " Y2: " << y2;
+
+                x3 = x3 - valX1;
+                y3 = y3 - valY1;
+
+                cout << "\n\n=== Transalacao para o ponto (0,0) ===";
                 cout << "\n X3: " << x3 << " Y3: " << y3;
 
+                Xauxiliar = cos(rad) * x3 - sin(rad) * y3;
+                Yauxiliar = sin(rad) * x3 + cos(rad) * y3;
+
+                cout << "\n\n=== Rotacao ===";
+                cout << "\n XAuxiliar: " << Xauxiliar << " YAuxiliar: " << Yauxiliar;
+
+                x3 = Xauxiliar + valX1;
+                y3 = Yauxiliar + valY1;
+
+                cout << "\n\n=== Transalacao volta ponto original ===";
+                cout << "\n X3: " << x3 << " Y3: " << y3;
+
+                /*
                 x1 += valX1;
                 y1 += valY1;
                 x2 += valX1;
                 y2 += valY1;
                 x3 += valX1;
                 y3 += valY1;
-
-                cout << "\n\n=== Retornado ao ponto inicial ===";
-                cout << "\n X1: " << x1 << " Y1: " << y1;
-                cout << "\n X2: " << x2 << " Y2: " << y2;
-                cout << "\n X3: " << x3 << " Y3: " << y3;
+                */
 
                 glClear(GL_COLOR_BUFFER_BIT);
 
@@ -199,10 +271,6 @@ int main()
                 cout << "Tipo de triangulo: " << verificarTipoTriangulo(lado1, lado2, lado3) << endl;
                 glfwSwapBuffers(window);
 
-                cout << "\n\n=== Depois ===";
-                cout << " \nX1: " << x1 << " Y1: " << y1;
-                cout << " \nX2: " << x2 << " Y2: " << y2;
-                cout << " \nX3: " << x3 << " Y3: " << y3;
 
                 break;
 
